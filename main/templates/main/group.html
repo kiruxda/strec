@@ -1,0 +1,41 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} {{ group.name }} {% endblock %}
+{% block content %} 
+<div class="features">
+    <h1>group:{{ group.name }}, course:{{ group.course }}</h1>
+    <table>
+        <tr>students:</tr>
+        <tr>
+            <td>name</td>
+        </tr>
+        {% for student in group.student_set.all %}
+        <tr>
+            <td><a href="{% url 'student' student.id %}">{{student.name}}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <table>
+        <tr>syllabus:</tr>
+        <tr>
+            <td>name of discipline</td>
+            <td>type of assesment</td>
+            <td>course</td>
+        </tr>
+        {% for syllabuses in group.syllabus.all %}
+        {% for discipline in syllabuses.discipline.all %}
+        <tr>
+            <td>
+                <div>{{discipline}}</div>
+            </td>
+            <td>
+                <div>{{discipline.type_of_assesment}}</div>
+            </td>
+            <td>{{syllabuses.course}}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} delete {% endblock %}
+{% block content %} 
+<div class="features">
+    <form method="post">
+        {% csrf_token %}
+        <button type="sumbit" class="index-button">Delete</button>
+<div>
+{% endblock %} 

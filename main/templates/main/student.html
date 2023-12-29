@@ -1,0 +1,66 @@
+{% extends 'main/layout.html' %}
+{% block title %} {{ student.name }} {% endblock %}
+{% block content %} 
+<div class="features">
+    <h1>{{ student.name }}, <a href="{% url 'group' student.group.id %}">{{student.group.name}}</a>, course: {{student.group.course}}</h1>
+    <p>record book №{{student.recordbook.number}}</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>name of discipline</th>
+            <th>mark</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for completed_discipline in student.recordbook.completed_disciplines.all %}
+        <tr>
+            <td>{{completed_discipline.discipline.name}}</td>
+            <td>{{completed_discipline.mark}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p>academic debt</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>name of discipline</th>
+            <th>type of assesment</th>
+            <th>course</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for syllabuses in student.group.syllabus.all %}
+        {% if syllabuses.course <= student.group.course %}
+        {% for debt in debts %}
+        <tr>
+            {% if debt in syllabuses.discipline.all %}
+            <td>
+                <div>{{debt.name}}</div>
+            </td>
+            <td>
+                <div>{{debt.type_of_assesment}}</div>
+            </td>
+            <td>{{syllabuses.course}}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    {%if user.is_superuser%}
+    <form action="{% url 'delete_student' student.id %}">
+        <button type="submit" class="button">delete student</button>
+    </form>
+    <form action="{% url 'update_student' student.id %}">
+        <button type="submit" class="button">update student</button>
+    </form>
+    {%endif%}
+    {%if user.student.pk != student.pk%}
+    <form action="{% url 'add_completed_discipline' student.id %}">
+        <button type="submit" class="button">add completed discipline</button>
+    </form>
+    {%endif%}
+</div>
+{% endblock %}

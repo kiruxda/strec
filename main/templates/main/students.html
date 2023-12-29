@@ -1,0 +1,34 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} {{ title }} {% endblock %}
+{% block content %} 
+<div class="features">
+    <h1>{{ content }}</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>group</th>
+                <th>course</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td><a href="{% url 'student' student.id %}">{{student.name}}</a></td>
+                <td><a href="{% url 'group' student.group.id %}">{{student.group}}</a></td>
+                <td>{{student.group.course}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {%if user.is_superuser%}
+    <form action="{% url 'add_student' %}">
+        <button type="submit" class="button">Add student</button>
+    </form>
+    <a href="{% url 'students_export' format='CSV' %}">CSV</a>
+    <a href="{% url 'students_export' format='JSON' %}">JSON</a>
+    {%endif%}
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+</head>
+<body>
+    <aside>
+        <img src="{%static 'main/img/university.svg'%}"alt='logo'>
+        <ul>
+            <a href="{% url 'home' %}"><li><img src="{%static 'main/img/home.svg'%}"alt='home'>home</li></a>
+            <a href="{% url 'students' %}"><li><img src="{%static 'main/img/student.svg'%}"alt='student'>students</li></a>
+            <a href="{% url 'groups' %}"><li><img src="{%static 'main/img/groups.svg'%}"alt='groups'>groups</li></a>
+            <a href="{% url 'teachers' %}"><li><img src="{%static 'main/img/teacher.svg'%}"alt='teacher'>teachers</li></a>
+        </ul>
+    </aside>
+    <main>
+        {% if request.user.is_authenticated %}
+        <p align="right">Welcome, {{ request.user.get_username }}</p>
+        <form action="{% url 'logout' %}">
+            <button type="submit" class="button">logout</button>
+        </form>
+        {% else %}
+        <form action="{% url 'login' %}">
+            <button type="submit" class="button">login</button>
+        </form>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

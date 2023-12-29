@@ -1,0 +1,12 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} add  {% endblock %}
+{% block content %} 
+<div class="features">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Add </button>
+    </form>
+</div>
+{% endblock %} 

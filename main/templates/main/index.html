@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home page</title>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+</head>
+<body>
+    <main>
+        {% if request.user.is_authenticated %}
+        <p align="right">Welcome, {{ request.user.get_username }}</p>
+        <form action="{% url 'logout' %}">
+            <button type="submit" class="button">logout</button>
+        </form>
+        {% else %}
+        <form action="{% url 'login' %}">
+            <button type="submit" class="button">login</button>
+        </form>
+        {% endif %}
+        <div class="features">
+          <h1>Welcome to student record site</h1>
+          <form action="{% url 'students' %}">
+            <button type="submit" class="index-button">students</button>
+          </form>
+          <form action="{% url 'groups' %}">
+            <button type="submit" class="index-button">groups</button>
+          </form>
+          <form action="{% url 'teachers' %}">
+          <button type="submit" class="index-button">teachers</button>
+          </form>
+        </div>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

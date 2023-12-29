@@ -1,0 +1,13 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} add student {% endblock %}
+{% block content %} 
+<div class="features">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ recordbook_form.as_p }}
+        <button type="sumbit" class="button">Add student</button>
+    </form>
+</div>
+{% endblock %} 

@@ -1,0 +1,30 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} teachers {% endblock %}
+{% block content %} 
+<div class="features">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>teacher name</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td><a href="{% url 'teacher' teacher.id %}">{{teacher.name}}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {%if user.is_superuser%}
+    <form action="{% url 'add_teacher' %}">
+        <button type="submit" class="button">Add teacher</button>
+    </form>
+    <form action="{% url 'add_discipline' %}">
+        <button type="submit" class="button">Add discipline</button>
+    </form>
+    {%endif%}
+</div>
+
+{% endblock %}

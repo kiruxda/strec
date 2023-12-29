@@ -1,0 +1,14 @@
+{% extends 'main/layout.html' %}
+
+{% block title %} teachers {% endblock %}
+{% block content %} 
+<div class="features">
+   <p>{{teacher.name}}</p>
+</div>
+{%if user.is_superuser%}
+<form action="{% url 'delete_teacher' teacher.id %}">
+    <button type="submit" class="button">delete teacher</button>
+</form>
+{%endif%}
+
+{% endblock %}
