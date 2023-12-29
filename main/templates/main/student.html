@@ -57,7 +57,7 @@
         <button type="submit" class="button">update student</button>
     </form>
     {%endif%}
-    {%if user.student.pk != student.pk%}
+    {%if user.groups.last.name == 'teacher group' or user.is_superuser%}
     <form action="{% url 'add_completed_discipline' student.id %}">
         <button type="submit" class="button">add completed discipline</button>
     </form>
